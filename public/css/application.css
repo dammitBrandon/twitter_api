@@ -1,0 +1,41 @@
+body {
+  background-color: rgb(188, 201, 142);
+}
+
+header, footer {
+  background-color: rgb(55,69,80);
+  height: 10%;
+}
+
+footer {position: fixed; bottom: 0; margin: auto;}
+
+header ul, footer ul {
+  list-style-type: none;
+}
+
+header > nav > ul > li, footer > nav > ul > li {
+  display: inline-block;
+  padding: 1em;
+}
+
+header > nav > ul > li > a, footer > nav > ul > li > a{
+  text-decoration: none;
+  color: white;
+}
+
+header > nav, footer > nav {float: right; }
+
+section {
+  background-color: rgb(88,151,152);
+  text-align: center;
+}
+a#user-menu { text-decoration: none; color: rgb(43, 67, 79); }
+a#user-menu:hover { color: rgb(238, 238, 153); }
+
+#right-side-container {
+    margin-top: 20px;
+    margin-left: 20px;
+    position: relative;
+}
+
+
