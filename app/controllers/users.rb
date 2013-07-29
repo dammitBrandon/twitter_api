@@ -3,22 +3,23 @@ get '/user/register' do
 end
 
 post '/user/register' do
-  @current_user = User.new(
-                            firstname: params[:user][:firstname],
-                            lastname: params[:user][:lastname],
-                            username: params[:user][:username],
-                            email: params[:user][:email],
-                            password: params[:user][:password],
-                            password_confirmation: params[:user][:password_confirmation]
-                          )
-  @current_user.save
-  if @current_user.errors.empty?
-    session[:id] = @current_user.id
-    erb :'user/home'
-  else
-    @errors = @current_user.errors
-    erb :'/user/register'
-  end
+  @user = User.find_or_create_by(name: params[:user][:name])
+  @user.username= params[:user][:username]
+  # @current_user.save
+  # if @current_user.errors.empty?
+  #   session[:id] = @current_user.id
+  #   erb :'user/home'
+  # else
+  #   @errors = @current_user.errors
+  #   erb :'/user/register'
+  # end
+  @user.save
+  erb :'/user/home'
+end
+
+post '/user/login' do
+  @user = User.find_by_name(params[:user][:name])
+  erb :'user/home'
 end
 
 get '/user/home' do

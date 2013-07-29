@@ -3,12 +3,28 @@ get '/' do
 end
 
 get '/:username' do
-  @user = TwitterUser.find_by_username(params[:username])
-  if @user.tweets.empty?
-    puts "empty."
-  else
-    @user.fetch_tweets!
-  end
-  # @tweets = @user.tweets.limit(10)
-  puts @user.tweets
+  @user = User.find_by_username(params[:username])
+  #twitterShit = Twitter.user_timeline(@user.username, count: 10)
+ # @user = User.new(
+ #   name: twitterShit.first.user.name,
+ #   username: twitterShit.first.user.screen_name,
+ #   description: twitterShit.first.user.description
+ #  )
+
+ # twitterShit.each do |tweet| 
+  
+
+  
+ #  @user.tweets.find_or_create_by(
+ #    tweet_id: tweet.id,
+ #    text: tweet.text, 
+ #    favourites_count: tweet.user.favourites_count, 
+ #    created_at: tweet.created_at)
+
+ #  end
+ @user.fetch_tweets!
+
+  @user.save
+
+ erb :user_tweet
 end

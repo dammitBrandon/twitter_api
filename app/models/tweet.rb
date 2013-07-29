@@ -1,5 +1,5 @@
 class Tweet < ActiveRecord::Base
-  attr_reader :tweets
-  
+  belongs_to :user
+ 
 
 end

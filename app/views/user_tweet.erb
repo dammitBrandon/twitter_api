@@ -1,0 +1,11 @@
+<div id="<%=@user.username%>">
+<p><%= @user.username %></p>
+<p><%=@user.description%></p>
+<ul>
+  <% tweets = @user.tweets.limit(10) %>
+<% tweets.each do |tweet| %>
+<li><%= tweet.text %> <%= tweet.created_at %> <%= tweet.favourites_count %> </li>
+<% end %>
+</ul>
+
+</div>

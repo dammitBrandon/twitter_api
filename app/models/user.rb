@@ -1,23 +1,36 @@
-class TwitterUser < ActiveRecord::Base
-  #attr_accessor :password
+class User < ActiveRecord::Base
+  # attr_accessor :tweets
+  has_many  :tweets
 
-  # has_many :posts
-  # has_many :comments, as: :commentable
+def fetch_tweets!
+    tweets = []
+  if self.tweets.empty?
 
-  # validates :firstname, presence: true, length: { in: 2..25 }
-  # validates :lastname, presence: true, length: { in: 2..25 }
-  # validates :username, presence: true, uniqueness: true, length: { in: 2..25 }
+    tweets = Twitter.user_timeline(self.username)
+    tweets.each do |tweet|
+    self.tweets.build( 
+      tweet_id: tweet.id,
+      text: tweet.text, 
+      favourites_count: tweet.user.favourites_count, 
+      created_at: tweet.created_at)
+    end
+    
+   
 
-  # validates :email, presence: true, uniqueness: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "%{value} is not a valid email address." }
+  else
+    tweets = Twitter.user_timeline(self.username, since_id: self.tweets.first.tweet_id)
+    tweets.each do |tweet|
+      self.tweets.build( 
+        tweet_id: tweet.id,
+        text: tweet.text, 
+        favourites_count: tweet.user.favourites_count, 
+        created_at: tweet.created_at)
+    end
+  end    
+end
 
-  # validates :password, presence: { message: "Password cannot be empty" },
-  #                                  length: {
-  #                                            in: 6..15,
-  #                                            too_short: "Password is too short, must be longer than %{value} characters long",
-  #                                            too_long: "Password is too long, must be shorter than %{value} characters long" 
-  #                                           }
 
-
-  # has_secure_password
-
+# def sortTweets
+#   @tweets.each {|tweetObj| Tweet.new(tweetObj)}
+# end
 end
